@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer World | Home</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            --faint-blue: #00d4ff;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --owner-peach: #f2a68d;
+            --logo-gold: #d4af37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body { background: #000; color: var(--white); overflow-x: hidden; min-height: 100vh; }
+
+        /* --- BACKGROUND SETUP --- */
+        .site-background {
+            position: fixed;
+            inset: 0;
+            background-image: url("background.avif"); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7); /* Darkened for high-end look */
+            backdrop-filter: blur(4px);
+            z-index: -1;
+        }
+
+        /* --- CLICK ANIMATION --- */
+        .clickable { transition: transform 0.1s ease; cursor: pointer; position: relative; }
+        .clickable:active { transform: scale(0.94) !important; }
+
+        /* --- NAVIGATION --- */
+        nav, .mobile-nav {
+            background: rgba(0, 0, 0, 0.5) !important;
+            backdrop-filter: blur(30px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(30px) saturate(160%) !important;
+        }
+
+        nav { position: fixed; top: 0; width: 100%; height: 70px; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; z-index: 1000; border-bottom: 1px solid var(--glass-border); }
+        .logo-text { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: white; letter-spacing: 1.5px; }
+        .logo-text span { color: var(--faint-blue); }
+
+        .nav-links { display: flex; gap: 8px; }
+        .nav-link {
+            position: relative; color: rgba(255,255,255,0.7); text-decoration: none; 
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase; 
+            padding: 10px; transition: all 0.3s ease;
+        }
+
+        .nav-link::after, .m-link::after {
+            content: ''; position: absolute; bottom: 5px; left: 50%; width: 0; height: 2px;
+            background: var(--faint-blue); box-shadow: 0 0 10px var(--faint-blue);
+            transition: all 0.3s ease; transform: translateX(-50%);
+        }
+
+        .nav-link:hover, .m-link:hover { color: var(--faint-blue) !important; text-shadow: 0 0 15px rgba(0, 212, 255, 0.8); }
+        .nav-link:hover::after, .m-link:hover::after { width: 70%; }
+
+        /* --- MOBILE NAVIGATION (Horizontal Scroll) --- */
+        .mobile-nav {
+            position: fixed; bottom: 0; width: 100%; height: 75px;
+            display: flex; align-items: center;
+            border-top: 1px solid var(--glass-border); z-index: 1001;
+            overflow-x: auto; padding: 0 15px; scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .mobile-nav::-webkit-scrollbar { display: none; }
+
+        .m-link { 
+            flex: 0 0 auto; min-width: 85px; text-decoration: none; text-align: center; 
+            font-size: 0.65rem; color: rgba(255,255,255,0.4); 
+            display: flex; flex-direction: column; align-items: center; transition: 0.3s;
+        }
+        .m-link i { font-size: 1.3rem; display: block; margin-bottom: 3px; }
+        .m-link.active { color: var(--faint-blue); }
+
+        /* --- PROFILE HEADER STYLING --- */
+        .container { padding: 100px 5% 120px 5%; max-width: 600px; margin: 0 auto; }
+        .profile-header { text-align: center; margin-top: 20px; }
+
+        .profile-logo {
+            width: 150px; height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--logo-gold);
+            
+           
+            overflow: hidden;
+        }
+
+        .profile-logo img {
+            width: 115%; /* Zoomed to hide black edges */
+            height: 115%;
+            object-fit: cover;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .owner-name {
+            font-size: 1.1rem; font-weight: 600; color: #94a3b8;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            margin-top: 15px; margin-bottom: 5px;
+        }
+
+        .hp-line {
+            width: 65px; height: 2px;
+            background: var(--owner-peach);
+            margin: 0 auto 8px; border-radius: 10px;
+        }
+
+        .owner-title {
+            font-size: 1.1rem; font-weight: 800; color: white;
+            text-transform: uppercase; letter-spacing: 4px;
+        }
+
+        /* --- BUTTONS & CARDS --- */
+        .action-buttons { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
+        .action-btn { background: #007bb5; color: white; border-radius: 50px; padding: 10px 20px; text-decoration: none; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; font-weight: 600; transition: 0.3s; }
+        .action-btn.wa { background: #25d366; }
+
+        .info-list { max-width: 400px; margin: 0 auto; }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 0.9rem; color: #eee; background: var(--glass); padding: 12px; border-radius: 15px; border: 1px solid var(--glass-border); transition: 0.3s; backdrop-filter: blur(10px); }
+        .info-item:hover { border-color: var(--faint-blue); background: rgba(255, 255, 255, 0.12); }
+        .info-icon { width: 40px; height: 40px; background: #007bb5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: white; }
+
+        .translate-box { background: var(--glass); padding: 15px; border-radius: 12px; max-width: 220px; margin: 20px auto; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
+
+        #langList { display: none; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); border-radius: 15px; border: 1px solid var(--faint-blue); margin: 10px auto; max-width: 320px; }
+        .l-btn { background: rgba(255,255,255,0.05); color: white; border: 1px solid #333; padding: 10px; cursor: pointer; border-radius: 8px; font-size: 0.8rem; }
+        .l-btn:hover { background: var(--faint-blue); color: black; font-weight: 700; }
+
+        .bottom-actions { display: flex; gap: 10px; max-width: 400px; margin: 20px auto; }
+        .btn-full { flex: 1; padding: 15px; border-radius: 12px; background: #007bb5; color: white; text-align: center; text-decoration: none; font-size: 0.85rem; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; }
+
+        .social-footer { display: flex; justify-content: center; gap: 15px; margin-top: 40px; padding-bottom: 100px; }
+        .social-circle { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; text-decoration: none; transition: 0.3s; }
+        .ig { background: #E1306C; } .fb { background: #4267B2; } .li { background: #0077b5; } .wa-footer { background: #25d366; } .sms-footer { background: #ff9800; }
+
+        @media (max-width: 850px) { .nav-links { display: none; } }
+        #google_translate_element, .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+    </style>
+</head>
+<body>
+    <div class="site-background"></div>
+    <div class="bg-overlay"></div>
+
+    <nav>
+        <a href="index.html" class="logo-text">COMPUTER<span>WORLD</span></a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link clickable">Home</a>
+            <a href="about.html" class="nav-link clickable">About Us</a>
+            <a href="services.html" class="nav-link clickable">Product & Services</a>
+            <a href="shop.html" class="nav-link clickable">Shop</a>
+            <a href="gallery.html" class="nav-link clickable">Gallery</a>
+            <a href="videos.html" class="nav-link clickable">Youtube Videos</a>
+            <a href="payment.html" class="nav-link clickable">Payment</a>
+            <a href="contact.html" class="nav-link clickable">Enquiry</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="profile-header">
+            <div class="profile-logo clickable">
+                <img src="logo.jpg" alt="Computer World Logo">
+            </div>
+            <h1 style="font-size: 2.8rem; font-weight: 600; margin-bottom: 5px;">Computer World</h1>
+            <p class="owner-name">Pankaj Sant</p>
+            <div class="hp-line"></div>
+            <p class="owner-title">Owner</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="tel:9890234503" class="action-btn clickable"><i class="fas fa-phone"></i> Call</a>
+            <a href="https://wa.me/9890234503" class="action-btn wa clickable"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:pankajsant688@gmail.com" class="action-btn clickable"><i class="fas fa-envelope"></i> Mail</a>
+        </div>
+
+        <div class="info-list">
+            <div class="info-item clickable"><div class="info-icon"><i class="fas fa-phone"></i></div><span>9890234503</span></div>
+            <div class="info-item clickable"><div class="info-icon"><i class="fas fa-phone"></i></div><span>8830364654</span></div>
+            <div class="info-item clickable"><div class="info-icon"><i class="fas fa-envelope"></i></div><span>pankajsant688@gmail.com</span></div>
+            <div class="info-item clickable"><div class="info-icon"><i class="fas fa-map-marker-alt"></i></div><span>Ichalkaranji (416115)</span></div>
+        </div>
+
+        <div class="translate-box clickable" onclick="toggleLang()">
+            <span>Select Language ⌵</span><br>
+            <small style="opacity:0.5;">Translate Website</small>
+        </div>
+
+        <div id="langList">
+            <button class="l-btn clickable" onclick="translateTo('hi')">Hindi</button>
+            <button class="l-btn clickable" onclick="translateTo('mr')">Marathi</button>
+            <button class="l-btn clickable" onclick="translateTo('en')">English</button>
+            <button class="l-btn clickable" onclick="translateTo('gu')">Gujarati</button>
+            <button class="l-btn clickable" onclick="translateTo('ta')">Tamil</button>
+            <button class="l-btn clickable" onclick="translateTo('te')">Telugu</button>
+            <button class="l-btn clickable" onclick="translateTo('kn')">Kannada</button>
+            <button class="l-btn clickable" onclick="translateTo('bn')">Bengali</button>
+            <button class="l-btn clickable" onclick="translateTo('pa')">Punjabi</button>
+            <button class="l-btn clickable" onclick="translateTo('ml')">Malayalam</button>
+        </div>
+
+        <div class="bottom-actions">
+            <button onclick="downloadVCard()" class="btn-full clickable">Save Contact</button>
+            <button onclick="shareProfile()" class="btn-full clickable" style="background:#eee; color:#000;">Share Profile</button>
+        </div>
+
+        <div class="social-footer">
+            <a href="https://instagram.com" class="social-circle ig clickable"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" class="social-circle fb clickable"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://linkedin.com" class="social-circle li clickable"><i class="fab fa-linkedin-in"></i></a>
+            <a href="sms:9890234503" class="social-circle sms-footer clickable"><i class="fas fa-comment-alt"></i></a>
+            <a href="https://wa.me/9890234503" class="social-circle wa-footer clickable"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </main>
+
+    <!-- MOBILE NAVIGATION (Scroll Swipe Left-to-Right) -->
+    <div class="mobile-nav">
+        <a href="index.html" class="m-link active clickable"><i class="fas fa-home"></i>Home</a>
+        <a href="about.html" class="m-link clickable"><i class="fas fa-briefcase"></i>About Us</a>
+        <a href="services.html" class="m-link clickable"><i class="fas fa-tools"></i>Services</a>
+        <a href="shop.html" class="m-link clickable"><i class="fas fa-shopping-cart"></i>Shop</a>
+        <a href="gallery.html" class="m-link clickable"><i class="fas fa-image"></i>Gallery</a>
+        <a href="videos.html" class="m-link clickable"><i class="fas fa-video"></i>Videos</a>
+        <a href="payment.html" class="m-link clickable"><i class="fas fa-wallet"></i>Payment</a>
+        <a href="contact.html" class="m-link clickable"><i class="fas fa-phone"></i>Enquiry</a>
+    </div>
+
+    <!-- Google Translate Script -->
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() { new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element'); }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        function toggleLang() { const l = document.getElementById('langList'); l.style.display = (l.style.display === 'grid') ? 'none' : 'grid'; }
+        function translateTo(code) {
+            const sel = document.querySelector(".goog-te-combo");
+            if (sel) { sel.value = code; sel.dispatchEvent(new Event('change')); toggleLang(); }
+        }
+
+        document.addEventListener('mousedown', function (e) {
+            const el = e.target.closest('.clickable');
+            if (el) { el.style.transform = "scale(0.95)"; setTimeout(() => { el.style.transform = ""; }, 150); }
+        });
+
+        function downloadVCard() {
+            const v = "BEGIN:VCARD\nVERSION:3.0\nFN:Pankaj Sant Computer World\nTEL:9890234503\nEND:VCARD";
+            const b = new Blob([v], {type: "text/vcard"});
+            const u = URL.createObjectURL(b);
+            const a = document.createElement("a"); a.href = u; a.download = "Pankaj_Sant.vcf"; a.click();
+        }
+        function shareProfile() { if(navigator.share) navigator.share({url: window.location.href}); }
+    </script>
+</body>
+</html>

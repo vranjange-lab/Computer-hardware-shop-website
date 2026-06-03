@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+:root {
+    --bg-black: #030617;
+    --dark-blue: #001a33;
+    --faint-blue: #00d4ff;
+    --white: #ffffff;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+
+body {
+    background: var(--bg-black);
+    color: var(--white);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* THE PRISM TEXTURE - NO CITY IMAGE */
+.prism-layer {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--bg-black) 45%, var(--dark-blue) 45%);
+    z-index: -2;
+}
+
+.prism-line {
+    position: fixed;
+    top: 0; left: 45%; width: 1px; height: 150%;
+    background: var(--faint-blue);
+    transform: rotate(45deg);
+    box-shadow: 0 0 25px var(--faint-blue);
+    opacity: 0.25;
+    z-index: -1;
+}
+
+/* FLOATING GLASS NAVBAR */
+nav {
+    position: fixed;
+    top: 20px; left: 50%; transform: translateX(-50%);
+    width: 90%; max-width: 1200px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+    border-radius: 50px;
+    padding: 12px 35px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000;
+}
+
+.logo { font-weight: 800; font-size: 1.4rem; letter-spacing: 1.5px; text-decoration: none; color: white; }
+.logo span { color: var(--faint-blue); text-shadow: 0 0 10px var(--faint-blue); }
+
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+.nav-links a:hover { color: var(--faint-blue); }
+
+/* CONTENT LAYOUT */
+.container { padding: 160px 10% 100px 10%; max-width: 1300px; margin: 0 auto; }
+
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 40px;
+    transition: 0.4s ease;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.glass-card:hover { border-color: var(--faint-blue); transform: translateY(-5px); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
+
+.btn {
+    background: var(--white); color: var(--bg-black);
+    padding: 12px 30px; border-radius: 50px;
+    text-decoration: none; font-weight: 700; display: inline-block;
+    transition: 0.3s; border: none; cursor: pointer;
+}
+.btn:hover { background: var(--faint-blue); box-shadow: 0 0 20px var(--faint-blue); }
+
+/* MOBILE NAVIGATION */
+.mobile-nav {
+    position: fixed; bottom: 0; width: 100%; height: 75px;
+    background: rgba(2, 6, 23, 0.98); backdrop-filter: blur(20px);
+    display: none; justify-content: space-around; align-items: center;
+    border-top: 1px solid var(--glass-border); z-index: 1001;
+}
+.mobile-nav a { color: rgba(255,255,255,0.4); text-decoration: none; text-align: center; font-size: 0.7rem; }
+.mobile-nav i { font-size: 1.5rem; display: block; margin-bottom: 2px; }
+.mobile-nav .active { color: var(--faint-blue); }
+
+@media (max-width: 850px) {
+    .nav-links, nav .btn { display: none; }
+    .mobile-nav { display: flex; }
+    .container { padding-top: 120px; padding-bottom: 110px; }
+}
